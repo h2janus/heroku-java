@@ -1,0 +1,6 @@
+{
+  "name": "heroku-java",
+  "description": "A bare-bones Gradle app, which can easily be deployed to Heroku.",
+  "image": "heroku/gradle",
+  "addons": [ "heroku-postgresql" ]
+}
