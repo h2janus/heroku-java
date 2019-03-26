@@ -18,6 +18,7 @@ package com.example.heroku;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import heroku.java.HueAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -45,7 +46,10 @@ public class HerokuApplication {
   private DataSource dataSource;
 
   public static void main(String[] args) throws Exception {
-    SpringApplication.run(HerokuApplication.class, args);
+    SpringApplication.run(new Class[] {
+        HerokuApplication.class,
+        HueAPI.class
+    }, args);
   }
 
   @RequestMapping("/")
@@ -61,7 +65,7 @@ public class HerokuApplication {
       stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
       ResultSet rs = stmt.executeQuery("SELECT tick FROM ticks");
 
-      ArrayList<String> output = new ArrayList<String>();
+      ArrayList<String> output = new ArrayList<>();
       while (rs.next()) {
         output.add("Read from DB: " + rs.getTimestamp("tick"));
       }
